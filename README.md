@@ -1,9 +1,9 @@
-## Home Assisant sensor component for Cure Afvalbeheer
+## Home Assisant sensor component for Groningen Afvalwijzer
 
-Provides Home Assistant sensors for the Dutch waste collector Cure Afvalbeheer using the Cure API.
+Provides Home Assistant sensors for the Dutch waste collector Groningen Afvalwijzer using a scraper.
 
 ### Install:
-- Copy the cure_afvalbeheer.py file to: [homeassistant]/config/custom_components/sensor/
+- Copy the groningen_afvalwijzer.py file to: [homeassistant]/config/custom_components/sensor/
 - Add the content below to configuration.yaml:
 
 ```yaml
