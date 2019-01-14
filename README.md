@@ -2,6 +2,8 @@
 
 Provides Home Assistant sensors for the Dutch waste collector Groningen Afvalwijzer using a scraper.
 
+![alt text](https://github.com/pippyn/Home-Assisant-Sensor-Groningen-Afvalwijzer/blob/master/example.png)
+
 ### Install:
 - Copy the groningen_afvalwijzer.py file to: [homeassistant]/config/custom_components/sensor/
 - Add the content below to configuration.yaml:
