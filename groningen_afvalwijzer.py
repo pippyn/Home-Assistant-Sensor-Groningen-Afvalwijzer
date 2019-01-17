@@ -1,10 +1,11 @@
 """
 Sensor component for Groningen Afvalwijzer
 Original Author:  Pippijn Stortelder
-Current Version:  1.0.2  20190114 - Pippijn Stortelder
+Current Version:  1.0.3  20190117 - Pippijn Stortelder
 20190108 - Initial Release
 20190109 - Code clean up - fixed error handling
 20190114 - Github release
+20190117 - FUXED small bug with empty date
 
 Description:
   Provides sensors for the Dutch waste collector Groningen Afvalwijzer.
@@ -45,7 +46,7 @@ from homeassistant.const import (CONF_RESOURCES)
 from homeassistant.util import Throttle
 from homeassistant.helpers.entity import Entity
 
-__version__ = '1.0.1'
+__version__ = '1.0.3'
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -133,9 +134,12 @@ class AfvalwijzerData(object):
                                 waste_dict[fraction_name] = []
                             else:
                                 for day in table_row[i].split(" "):
-                                    waste_dict[fraction_name].append(
-                                        datetime.strptime(
-                                            (day.replace("*", "") + " " + str(i) + " " + year), "%d %m %Y"))
+                                    try:
+                                        waste_dict[fraction_name].append(
+                                            datetime.strptime(
+                                                (day.replace("*", "") + " " + str(i) + " " + year), "%d %m %Y"))
+                                    except (ValueError, TypeError):
+                                        pass
                 self.data = waste_dict
             else:
                 _LOGGER.error('Error occurred while fetching data. Probably the postcode/street number is incorrect.')
