@@ -5,7 +5,7 @@ Current Version:  1.0.3  20190117 - Pippijn Stortelder
 20190108 - Initial Release
 20190109 - Code clean up - fixed error handling
 20190114 - Github release
-20190117 - FUXED small bug with empty date
+20190117 - FIXED small bug with empty date
 
 Description:
   Provides sensors for the Dutch waste collector Groningen Afvalwijzer.
