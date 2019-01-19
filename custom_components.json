@@ -2,8 +2,8 @@
     "sensor.groningen_afvalwijzer": {
       "version": "1.0.3",
       "local_location": "custom_components/sensor/groningen_afvalwijzer.py",
-      "remote_location": "https://raw.githubusercontent.com/pippyn/Home-Assisant-Sensor-Groningen-Afvalwijzer/master/groningen_afvalwijzer.py",
-      "visit_repo": "https://github.com/pippyn/Home-Assisant-Sensor-Groningen-Afvalwijzer",
-      "changelog": "https://github.com/pippyn/Home-Assisant-Sensor-Groningen-Afvalwijzer/releases/latest"
+      "remote_location": "https://raw.githubusercontent.com/pippyn/Home-Assistant-Sensor-Groningen-Afvalwijzer/master/groningen_afvalwijzer.py",
+      "visit_repo": "https://github.com/pippyn/Home-Assistant-Sensor-Groningen-Afvalwijzer",
+      "changelog": "https://github.com/pippyn/Home-Assistant-Sensor-Groningen-Afvalwijzer/releases/latest"
     }
 }
