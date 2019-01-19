@@ -33,5 +33,5 @@ custom_updater:
   track:
     - components
   component_urls:
-    - https://raw.githubusercontent.com/pippyn/Home-Assisant-Sensor-Groningen-Afvalwijzer/master/custom_components.json
+    - https://raw.githubusercontent.com/pippyn/Home-Assistant-Sensor-Groningen-Afvalwijzer/master/custom_components.json
 ```
