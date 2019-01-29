@@ -1,11 +1,12 @@
 """
 Sensor component for Groningen Afvalwijzer
 Original Author:  Pippijn Stortelder
-Current Version:  1.0.3  20190117 - Pippijn Stortelder
+Current Version:  1.0.4  20190117 - Pippijn Stortelder
 20190108 - Initial Release
 20190109 - Code clean up - fixed error handling
 20190114 - Github release
 20190117 - FIXED small bug with empty date
+20190129 - FIXED today collection bug
 
 Description:
   Provides sensors for the Dutch waste collector Groningen Afvalwijzer.
@@ -46,7 +47,7 @@ from homeassistant.const import (CONF_RESOURCES)
 from homeassistant.util import Throttle
 from homeassistant.helpers.entity import Entity
 
-__version__ = '1.0.3'
+__version__ = '1.0.4'
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -206,8 +207,10 @@ class AfvalwijzerSensor(Entity):
                             self._state = collection_date.strftime('Today, %d-%m-%Y')
                         else:
                             self._state = None
+                            self._hidden = True
                     else:
                         self._state = None
+                        self._hidden = True
                 else:
                     self._state = None
                     self._hidden = True
@@ -217,11 +220,9 @@ class AfvalwijzerSensor(Entity):
 
     @staticmethod
     def get_next_collection(today, waste_dict, fraction):
-        next_collection_date = today
+        next_collection_date = None
         for collection_date in waste_dict[fraction]:
-            if collection_date > today:
+            if collection_date >= today.replace(hour=0, minute=0, second=0, microsecond=0):
                 next_collection_date = collection_date
                 break
-        if next_collection_date == today:
-            next_collection_date = None
         return next_collection_date
