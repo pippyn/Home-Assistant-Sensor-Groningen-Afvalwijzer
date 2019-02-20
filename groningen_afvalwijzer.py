@@ -1,12 +1,13 @@
 """
 Sensor component for Groningen Afvalwijzer
 Original Author:  Pippijn Stortelder
-Current Version:  1.0.4  20190117 - Pippijn Stortelder
+Current Version:  1.1.0  20190220 - Pippijn Stortelder
 20190108 - Initial Release
 20190109 - Code clean up - fixed error handling
 20190114 - Github release
 20190117 - FIXED small bug with empty date
 20190129 - FIXED today collection bug
+20190220 - Added optional date options
 
 Description:
   Provides sensors for the Dutch waste collector Groningen Afvalwijzer.
@@ -31,6 +32,8 @@ Configuration.yaml:
         - papier
       postcode: 1111AA                 (required)
       streetnumber: 1                  (required)
+      dateformat: '%d-%m'              (optional)
+      dateonly: true                   (optional)
 """
 
 import logging
@@ -47,13 +50,17 @@ from homeassistant.const import (CONF_RESOURCES)
 from homeassistant.util import Throttle
 from homeassistant.helpers.entity import Entity
 
-__version__ = '1.0.4'
+__version__ = '1.1.0'
 
 _LOGGER = logging.getLogger(__name__)
 
 MIN_TIME_BETWEEN_UPDATES = timedelta(hours=1)
+
 CONF_POSTCODE = 'postcode'
-CONF_STREETNUMBER = 'streetnumber'
+CONF_STREET_NUMBER = 'streetnumber'
+CONF_DATE_FORMAT = 'dateformat'
+CONF_DATE_ONLY = 'dateonly'
+
 SENSOR_PREFIX = 'Afvalwijzer '
 ATTR_LAST_UPDATE = 'Last update'
 ATTR_HIDDEN = 'Hidden'
@@ -72,7 +79,9 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Required(CONF_RESOURCES, default=[]):
         vol.All(cv.ensure_list, [vol.In(SENSOR_TYPES)]),
     vol.Required(CONF_POSTCODE, default='1111AA'): cv.string,
-    vol.Required(CONF_STREETNUMBER, default='1'): cv.string,
+    vol.Required(CONF_STREET_NUMBER, default='1'): cv.string,
+    vol.Optional(CONF_DATE_FORMAT, default='%d-%m-%Y'): cv.string,
+    vol.Optional(CONF_DATE_ONLY, default=False): cv.boolean,
 })
 
 
@@ -80,7 +89,9 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     _LOGGER.debug('Setup Groningen Afvalwijzer retriever')
 
     postcode = config.get(CONF_POSTCODE)
-    street_number = config.get(CONF_STREETNUMBER)
+    street_number = config.get(CONF_STREET_NUMBER)
+    date_format = config.get(CONF_DATE_FORMAT)
+    date_only = config.get(CONF_DATE_ONLY)
 
     try:
         data = AfvalwijzerData(postcode, street_number)
@@ -96,17 +107,17 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
         if sensor_type not in SENSOR_TYPES:
             SENSOR_TYPES[sensor_type] = [sensor_type.title(), '', 'mdi:recycle']
 
-        entities.append(AfvalwijzerSensor(data, sensor_type))
+        entities.append(AfvalwijzerSensor(data, sensor_type, date_format, date_only))
 
     add_entities(entities)
 
 
 class AfvalwijzerData(object):
 
-    def __init__(self, postcode, streetnumber):
+    def __init__(self, postcode, street_number):
         self.data = None
         self.postcode = postcode
-        self.street_number = streetnumber
+        self.street_number = street_number
 
     @Throttle(MIN_TIME_BETWEEN_UPDATES)
     def update(self):
@@ -153,9 +164,11 @@ class AfvalwijzerData(object):
 
 class AfvalwijzerSensor(Entity):
 
-    def __init__(self, data, sensor_type):
+    def __init__(self, data, sensor_type, date_format, date_only):
         self.data = data
         self.type = SENSOR_TYPES[sensor_type][0]
+        self.date_format = date_format
+        self.date_only = date_only
         self._name = SENSOR_PREFIX + SENSOR_TYPES[sensor_type][0]
         self._unit = SENSOR_TYPES[sensor_type][1]
         self._icon = SENSOR_TYPES[sensor_type][2]
@@ -197,17 +210,21 @@ class AfvalwijzerSensor(Entity):
                     if collection_date:
                         self._last_update = today.strftime('%d-%m-%Y %H:%M')
                         date_diff = (collection_date - today).days + 1
-                        if date_diff >= 8:
-                            self._state = collection_date.strftime('%d-%m-%Y')
-                        elif date_diff > 1:
-                            self._state = collection_date.strftime('%A, %d-%m-%Y')
-                        elif date_diff == 1:
-                            self._state = collection_date.strftime('Tomorrow, %d-%m-%Y')
-                        elif date_diff <= 0:
-                            self._state = collection_date.strftime('Today, %d-%m-%Y')
+                        if self.date_only:
+                            if date_diff >= 0:
+                                self._state = collection_date.strftime(self.date_format)
                         else:
-                            self._state = None
-                            self._hidden = True
+                            if date_diff >= 8:
+                                self._state = collection_date.strftime(self.date_format)
+                            elif date_diff > 1:
+                                self._state = collection_date.strftime('%A, ' + self.date_format)
+                            elif date_diff == 1:
+                                self._state = collection_date.strftime('Tomorrow, ' + self.date_format)
+                            elif date_diff == 0:
+                                self._state = collection_date.strftime('Today, ' + self.date_format)
+                            else:
+                                self._state = None
+                                self._hidden = True
                     else:
                         self._state = None
                         self._hidden = True
