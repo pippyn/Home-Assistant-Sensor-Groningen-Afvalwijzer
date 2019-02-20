@@ -33,7 +33,7 @@ Configuration.yaml:
       postcode: 1111AA                 (required)
       streetnumber: 1                  (required)
       dateformat: '%d-%m'              (optional)
-      dateonly: true                   (optional)
+      dateonly: 1                      (optional)
 """
 
 import logging
