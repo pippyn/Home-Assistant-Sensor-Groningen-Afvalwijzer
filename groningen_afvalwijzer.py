@@ -1,13 +1,14 @@
 """
 Sensor component for Groningen Afvalwijzer
 Original Author:  Pippijn Stortelder
-Current Version:  1.1.0  20190220 - Pippijn Stortelder
+Current Version:  1.1.1  20190223 - Pippijn Stortelder
 20190108 - Initial Release
 20190109 - Code clean up - fixed error handling
 20190114 - Github release
 20190117 - FIXED small bug with empty date
 20190129 - FIXED today collection bug
 20190220 - Added optional date options
+20190223 - Fix for HA 88
 
 Description:
   Provides sensors for the Dutch waste collector Groningen Afvalwijzer.
@@ -50,7 +51,7 @@ from homeassistant.const import (CONF_RESOURCES)
 from homeassistant.util import Throttle
 from homeassistant.helpers.entity import Entity
 
-__version__ = '1.1.0'
+__version__ = '1.1.1'
 
 _LOGGER = logging.getLogger(__name__)
 
