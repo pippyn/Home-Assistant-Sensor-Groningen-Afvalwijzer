@@ -13,7 +13,7 @@ Current Version:  1.1.1  20190223 - Pippijn Stortelder
 Description:
   Provides sensors for the Dutch waste collector Groningen Afvalwijzer.
 
-Save the file as groningen_afvalwijzer.py in [homeassistant]/config/custom_components/sensor/
+Save this file as [homeassistant]/config/custom_components/groningen_afvalwijzer/sensor.py
 
 resources options:
 - restafval
