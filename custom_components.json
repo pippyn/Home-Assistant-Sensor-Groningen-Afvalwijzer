@@ -1,7 +1,7 @@
 {
     "sensor.groningen_afvalwijzer": {
-      "version": "1.1.0",
-      "local_location": "custom_components/sensor/groningen_afvalwijzer.py",
+      "version": "1.1.1",
+      "local_location": "custom_components/groningen_afvalwijzer/sensor.py",
       "remote_location": "https://raw.githubusercontent.com/pippyn/Home-Assistant-Sensor-Groningen-Afvalwijzer/master/groningen_afvalwijzer.py",
       "visit_repo": "https://github.com/pippyn/Home-Assistant-Sensor-Groningen-Afvalwijzer",
       "changelog": "https://github.com/pippyn/Home-Assistant-Sensor-Groningen-Afvalwijzer/releases/latest"
