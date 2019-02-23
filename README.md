@@ -50,10 +50,20 @@ If you don't want to add dayname, tomorrow or today in front of date activate th
 
 ## Custom updater
 You can use the custom updater with this sensor
+
+Home assistant 88 and higher:
 ```yaml
 custom_updater:
   track:
     - components
   component_urls:
     - https://raw.githubusercontent.com/pippyn/Home-Assistant-Sensor-Groningen-Afvalwijzer/master/custom_components.json
+```
+Before Home assistant 88:
+```yaml
+custom_updater:
+  track:
+    - components
+  component_urls:
+    - https://raw.githubusercontent.com/pippyn/Home-Assistant-Sensor-Groningen-Afvalwijzer/master/custom_components_old.json
 ```
