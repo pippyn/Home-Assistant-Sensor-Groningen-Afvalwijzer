@@ -50,7 +50,7 @@ from homeassistant.const import (CONF_RESOURCES)
 from homeassistant.util import Throttle
 from homeassistant.helpers.entity import Entity
 
-__version__ = '1.1.1'
+__version__ = '1.1.2'
 
 _LOGGER = logging.getLogger(__name__)
 
