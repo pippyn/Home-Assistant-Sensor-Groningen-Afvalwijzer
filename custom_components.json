@@ -6,7 +6,7 @@
       "visit_repo": "https://github.com/pippyn/Home-Assistant-Sensor-Groningen-Afvalwijzer",
       "changelog": "https://github.com/pippyn/Home-Assistant-Sensor-Groningen-Afvalwijzer/releases/latest",
       "resources": [
-            "https://github.com/pippyn/Home-Assistant-Sensor-Groningen-Afvalwijzer/blob/master/custom_components/groningen_afvalwijzer/sensor.py"
+            "https://github.com/pippyn/Home-Assistant-Sensor-Groningen-Afvalwijzer/blob/master/custom_components/groningen_afvalwijzer/manifest.json"
         ]
     }
 }
