@@ -1,0 +1,8 @@
+{
+  "domain": "groningen_afvalwijzer",
+  "name": "Afvalwijzer Groningen",
+  "documentation": "https://github.com/pippyn/Home-Assistant-Sensor-Groningen-Afvalwijzer",
+  "dependencies": [],
+  "codeowners": ["@pippyn"],
+  "requirements": []
+}
