@@ -1,3 +1,5 @@
+# DEPRECATED - This sensor is now integrated in [Afvalbeheer](https://github.com/pippyn/Home-Assistant-Sensor-Afvalbeheer)
+
 ## Home Assisant sensor component for Groningen Afvalwijzer
 
 Provides Home Assistant sensors for the Dutch waste collector Groningen Afvalwijzer using a scraper.
